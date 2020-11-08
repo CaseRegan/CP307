@@ -7,6 +7,7 @@ Tent        13        16
 Food        10        20
 Water       15        22
 Book        2         4
+Rock        1         28
 Camera      5         11
 Bandage     7         3
 Problem1
