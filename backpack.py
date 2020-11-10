@@ -1,7 +1,12 @@
-Backpack_contents = [];
-result_list = [];
+import numpy as np;
+import time;
+from LinkedList import *;
 
+#Load the problem file and save all the questions into a list
+#Return the list, which contains each question in each index with a format (name, capacity, items)
+#filename: the name of the file which contains the problems
 def loaddataset(filename):
+    Backpack_contents = LinkedList();
     dataset = open(filename, 'r');
     Promblem_instance_number = dataset.readline().split()[0];
     Promblem_instance_number = int(Promblem_instance_number);
@@ -13,7 +18,7 @@ def loaddataset(filename):
         if len(line_element) == 1:
             if "Problem" in line_element[0]:
                 if len(problem_content) != 0:
-                    Backpack_contents.append((problem_name,problem_capacity,problem_content));
+                    Backpack_contents.add((problem_name,problem_capacity,problem_content));
                     problem_content = [];
                 problem_name = line_element[0];
             else:
@@ -24,9 +29,10 @@ def loaddataset(filename):
             value = int(value);
             weight = int(weight);
             problem_content.append((item, value, weight));
-    Backpack_contents.append((problem_name,problem_capacity,problem_content));
+    Backpack_contents.add((problem_name,problem_capacity,problem_content));
 
     dataset.close();
+    return Backpack_contents;
 
 def Recursive(problem_content, currentindex, capacity):
     if capacity<= 0 or currentindex >= len(problem_content):
@@ -42,11 +48,59 @@ def Recursive(problem_content, currentindex, capacity):
 
     return max(profit1, profit2);
 
+#Create a dynamic matrix which holds the best profits when adding each item at capacity c (0 <= c< = capacity)
+#capacity: the largest weight that the backpack in the question is allowed to hold
+#problem_content: a list of the items with value and weight in the problem
+def CreateDynamicMatrix(capacity, problem_content):
+    n = len(problem_content);
+    matrix = np.zeros((n, capacity + 1));
 
+    for c in range(capacity + 1):
+        if problem_content[0][2] <= c:
+            matrix[0][c] = problem_content[0][1];
 
+    for i in range(1, n):
+        for j in range(1, capacity+1):
+            profit1 = 0;
+            profit2 = 0;
+            if problem_content[i][2] <= j:
+                profit1 = problem_content[i][1] + matrix[i-1][j-problem_content[i][2]];
+            profit2 = matrix[i-1][j];
+
+            matrix[i][j] = max(profit1, profit2);
+    return matrix;
+
+#Get the selected items from the dynamic matrix
+#capacity: the largest weight that the backpack in the question is allowed to hold
+#problem_content: a list of the items with value and weight in the problem
+#matrix: the dynamic matrix created by the function CreateDynamicMatrix
+def GetSet(capacity, problem_content, matrix):
+    resultset = []
+    totalvalue = matrix[len(problem_content)-1][capacity];
+    for currentrow in range(len(problem_content)-1, 0, -1):
+        if matrix[currentrow-1][capacity] != totalvalue:
+            resultset.append(problem_content[currentrow][0]);
+            totalvalue -= problem_content[currentrow][1];
+            capacity -= problem_content[currentrow][2];
+    if totalvalue != 0:
+        resultset.append(problem_content[0][0]);
+    return resultset;
+
+#Solve each question in a list of questions
+#problem_list: the list of all the questions in the file which contains backpack problems
+def Solve(problem_list):
+    answerset = []
+    for i in range(problem_list.get_size()):
+        matrix = CreateDynamicMatrix(problem_list.get(i)[1], problem_list.get(i)[2]);
+        resultset = GetSet(problem_list.get(i)[1], problem_list.get(i)[2], matrix);
+        resultset = sorted(resultset);
+        answerset.append(resultset);
+    return answerset;
 
 def main():
-    loaddataset("Toy Problem.txt");
-    test = Backpack_contents[1];
-    print(test[2], test[1]);
-    print(Recursive(test[2],0,test[1]));
+    start_time = time.perf_counter();
+    #Backpack_contents = loaddataset("problems_size1000.txt");
+    Backpack_contents = loaddataset("Toy Problem.txt");
+    print(Solve(Backpack_contents));
+    end_time = time.perf_counter();
+    print(end_time - start_time);
