@@ -200,6 +200,41 @@ Bag bruteforce_solve(int capacity, Bag bag)
 	}
 }
 
+Bag dynamic_solve(int capacity, Bag bag)
+{
+	// What a gorgeous block of memory
+	Bag (*T)[capacity+1] = malloc(sizeof(Bag[bag.size+1][capacity+1]));
+	int i, w;
+
+	for (i = 0; i <= bag.size; i++)
+	{
+		for (w = 0; w <= capacity; w++)
+		{
+			if (i == 0 || w == 0)
+			{
+				Bag tmp;
+				tmp.size = 0;
+				T[i][w] = tmp;
+			}
+			else if (bag.items[i-1].weight <= w)
+			{
+				Bag b1 = T[i-1][(w-bag.items[i-1].weight)];
+				put_bag(&b1, bag.items[i-1]);
+
+				if (score_bag(b1) > score_bag(T[i-1][w]))
+					T[i][w] = b1;
+				else
+					T[i][w] = T[i-1][w];
+			}
+			else
+				T[i][w] = T[i-1][w];
+		}
+	}
+
+	Bag solution = T[bag.size][capacity];
+	free(T);
+	return solution;
+}
 
 int main(int argc, char *argv[]) 
 {
@@ -226,7 +261,9 @@ int main(int argc, char *argv[])
 		clock_t t;
 		t = clock();
 
-		b = bruteforce_solve(p[i].capacity, p[i].bag);
+		// Use comments to decide which function you want to run
+		//b = bruteforce_solve(p[i].capacity, p[i].bag);
+		b = dynamic_solve(p[i].capacity, p[i].bag);
 
 		t = clock() - t;
 		double func_time = ((double)t)/CLOCKS_PER_SEC;
