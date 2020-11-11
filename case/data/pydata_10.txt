@@ -1,0 +1,88 @@
+Solution for Problem0:
+[
+  mtxkxypuzp
+  eyrvvitejc
+  djmvowgbvz
+  jbnhbxgqwf
+] time: 0.000434s
+
+Solution for Problem1:
+[
+  emcpxrvcel
+  dvtrfwisvo
+  rtwvjpvfhc
+] time: 0.000061s
+
+Solution for Problem2:
+[
+  ojgvjxaykz
+  cutbmsdntu
+  mnvjudtjjh
+  yekpghbeua
+  neikzabfoc
+] time: 0.000311s
+
+Solution for Problem3:
+[
+  gbtmhrkgtb
+  taktzhftwn
+  laiuspdoid
+  qgziihbrvk
+  vpupvebiey
+] time: 0.000590s
+
+Solution for Problem4:
+[
+  glexebjkic
+  pylkhoszpn
+  luznpoadlc
+  tbmkcyfoxx
+] time: 0.000449s
+
+Solution for Problem5:
+[
+  oeeomusdjs
+  vyrdpazxnd
+  qjusejlrow
+  kckzgwljii
+] time: 0.000052s
+
+Solution for Problem6:
+[
+  jcqfhftvpq
+  ezepatnrqh
+  rwdrhayugc
+  tyrrxeecsw
+  bfyldjvadl
+  evjbdoypjz
+] time: 0.000616s
+
+Solution for Problem7:
+[
+  pxtpumnrdr
+  ahupebcsqt
+  zvcxbbwsdp
+  rdbtrgsawg
+  elpnejjpbl
+] time: 0.000739s
+
+Solution for Problem8:
+[
+  hiioayslfs
+  xeykjevaoe
+  fnmcodjmhk
+  zhdstvckbu
+  hdmuhailhg
+  ybvzstcomn
+  lidrcdvlul
+] time: 0.000813s
+
+Solution for Problem9:
+[
+  rlybmahigu
+  ceblnrvsqw
+  wmugfrvwqe
+  mgqpqilaqj
+] time: 0.000089s
+
+Completed 10 problems in 0.004155s
