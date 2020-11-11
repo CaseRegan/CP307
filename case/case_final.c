@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define BAG_SIZE 100
 
@@ -218,10 +219,18 @@ int main(int argc, char *argv[])
 
 	read_problems_file(fname, p);
 
+	double total_time = 0;
 	for (int i = 0; i < n; i++)
 	{
 		Bag b;
+		clock_t t;
+		t = clock();
+
 		b = bruteforce_solve(p[i].capacity, p[i].bag);
+
+		t = clock() - t;
+		double func_time = ((double)t)/CLOCKS_PER_SEC;
+		total_time += func_time;
 
 		printf("\nSolution for %s:\n", p[i].title);
 		printf("[\n");
@@ -229,8 +238,10 @@ int main(int argc, char *argv[])
 		{
 			printf("  %s\n", b.items[j]);
 		}
-		printf("]\n");
+		printf("] time: %fs \n", func_time);
 	}
+
+	printf("\nCompleted %d problems in %fs\n", n, total_time);
 
 	return 0;
 }

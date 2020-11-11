@@ -1,4 +1,5 @@
-
+import time
+import sys
 
 # Reads a list of problems from a properly-formatted text file
 # and returns an array of Problem objects with matching properties
@@ -42,62 +43,39 @@ class Problem:
 			to_str += nvw[0] + "\t" + spacing + str(nvw[1]) + "\t" + str(nvw[2]) + "\n"
 		return to_str
 
-	def display_solution(self, subset):
-		weight = sum([item[2] for item in subset])
-		score = sum([item[1] for item in subset])
+def bruteforce_solve(max_weight, nvw):
+	if len(nvw) == 0 or max_weight == 0:
+		return []
 
-		to_str = ""
-		to_str += "The following solution was found:\n"
-		to_str += "[\n"
-		for item in subset:
-			to_str += "  %s (%d, %d),\n" % (item[0], item[1], item[2])
-		to_str += "]\n"
-		to_str += "with a weight of %d/%d and a score of %d.\n" \
-		  % (weight, self.max_weight, score)
-		to_str += "(items are formatted as: name (value, weight))"
+	nvw_next = [item for item in nvw[:-1]]
+	if not nvw_next or nvw_next[-1][2] > max_weight:
+		return bruteforce_solve(max_weight, nvw_next)
 
-		print(to_str)
+	else:
+		nvw1 = bruteforce_solve(max_weight-nvw_next[-1][2], nvw_next)
+		nvw1.append(nvw[-1])
+		nvw2 = bruteforce_solve(max_weight, nvw_next)
 
-	def best_solution(self, generator):
-		subsets = generator()
-		best_solution = None
-		best_score = 0
-		for subset in subsets:
-			score = sum([item[1] for item in subset])
-			weight = sum([item[2] for item in subset])
-			if score > best_score:
-				best_solution = subset
-				best_score = score
-
-		return best_solution
-
-	def gen_all_subsets(self, options=None, prev_subset=[]):
-		if not options:
-			options = self.names_values_weights
-
-		weight = sum([item[2] for item in prev_subset])
-		if weight > self.max_weight:
-			return []
-		elif weight == self.max_weight:
-			return [prev_subset]
-
-		subsets = []
-		for option in options:
-			next_options = options.copy()
-			next_subset = prev_subset.copy()
-			next_options.remove(option)
-			next_subset.append(option)
-			generated = self.gen_all_subsets(next_options, next_subset)
-			for subset in generated:
-				subsets.append(subset)
-
-		if subsets:
-			return subsets
+		if sum([item[1] for item in nvw1]) > sum([item[1] for item in nvw2]):
+			return nvw1
 		else:
-			return [prev_subset]
+			return nvw2
 
 if __name__ == "__main__":
-	problems = read_problems("problem_sets/10_items.txt")
+	if len(sys.argv) != 2:
+		print("Please supply exactly one argument with the path of the problems file")
+		exit(1)
+
+	problems = read_problems(sys.argv[1])
+	total_time = 0
 	for problem in problems:
-		solution = problem.best_solution(problem.gen_all_subsets)
-		problem.display_solution(solution)
+		start = time.time()
+		solution = bruteforce_solve(problem.max_weight, problem.names_values_weights)
+		func_time = time.time()-start
+		total_time += func_time
+		print("\nSolution for %s:" % problem.title)
+		print("[")
+		for item in solution:
+			print("  %s" % item[0])
+		print("] time: %fs" % func_time)
+	print("\nCompleted %d problems in %fs" % (len(problems), total_time))

@@ -1,0 +1,156 @@
+Solution for Problem0:
+[
+  wceqwjspwp
+  qjzbynckon
+  tpvrlqgnrg
+  cklemxfpja
+  cambtohddv
+  ocuqhwboiu
+  ptpivjukxr
+  kdqcxpfcaj
+  yuwwezwthb
+  fjcavuxlor
+  dfiaimfixq
+  ntmjebinmi
+  ytqjntdjlt
+  fxwynpotyc
+  eidugyzede
+  dkmnwtuhom
+  jemilzkifb
+] time: 63.590086s 
+
+Solution for Problem1:
+[
+  lktleokuco
+  sggmklzebm
+  vhibcismde
+  ufhofxxbsj
+  ehicfmtjjl
+  ppsetvjqbg
+  boxzjbxmgf
+  lvavehydjh
+] time: 0.001885s 
+
+Solution for Problem2:
+[
+  iqzqmtdkhn
+  vwylwctbyh
+  xezjgtvgoq
+  gyrkapwrdz
+  qakekccien
+  meyufjdguf
+  hvyrysvptk
+  xkscmkrvnk
+] time: 0.000862s 
+
+Solution for Problem3:
+[
+  aulotodbdv
+  dzahtyctwx
+  dmtgipspzt
+  otmhikkqta
+  crcsxvwinx
+  kcqfalyfil
+  ugnwztrwwt
+  woyjlgttqk
+  sjwfaemzdp
+  udyztbiaod
+] time: 0.130572s 
+
+Solution for Problem4:
+[
+  jsxowbfwwm
+  tniapwyvqe
+  glzbkbuupk
+  zxiuvapwuu
+  bzgqhxecgn
+  qsagojkizl
+  bdslhwstkq
+  sjddpfopdp
+] time: 0.002002s 
+
+Solution for Problem5:
+[
+  dhfqdbflag
+  nuukblpxqo
+  jnukzrsiuo
+  czdhphobat
+  whzhwlvvnk
+  qbiyawwwhx
+  wgqormjlut
+  netbhvnwrj
+] time: 0.029951s 
+
+Solution for Problem6:
+[
+  zpjuybblta
+  gsbwrltifj
+  wliykigzzw
+  twiyuexpld
+  zkybemsusj
+  fcwzohnrni
+  ksjlghvqli
+  nsxunbgyzx
+  etlcqhylsd
+  fuukuhfdcd
+  tepwpozlvg
+  lhggyqzaur
+  zfwryiksui
+  zdlopccubz
+  vdhhcdfytp
+  bcrknrfliw
+] time: 27.009836s 
+
+Solution for Problem7:
+[
+  teblrebyax
+  zwmnqilyog
+  jmobodbkcx
+  vhywuaecpg
+  rewvphoshm
+  kddedjycll
+  fgpsdmuhfn
+  ecmebzdqqf
+  daxugtmbxw
+  xfgeudaebk
+  msseawsdiz
+  lkmnncplcp
+  azwoqbnxrf
+] time: 3.758334s 
+
+Solution for Problem8:
+[
+  whcgyaxbmp
+  okjuatlzlq
+  yzzpuwboxd
+  keajyqzaxd
+  tucozabnby
+  xbbisogymd
+  fksmzipsmp
+  dbigxvkuga
+  favmulsvem
+  zwaxcvlaxw
+  sizgpdnqsc
+  jtznnunmhd
+  qyrudzjorf
+  yndbubgfoi
+  sqtxxfsmfg
+] time: 0.073351s 
+
+Solution for Problem9:
+[
+  qpkegbsebw
+  kiflzpbpla
+  ninckllpaf
+  dunxdglatv
+  iopmboiuub
+  sddrhsyfqn
+  iuwcsijrkh
+  cwrzsdqvlt
+  yjbrtmxpba
+  fjkkhlcost
+  crthecrcnr
+  oncfvtenof
+] time: 0.177370s 
+
+Completed 10 problems in 94.774249s
