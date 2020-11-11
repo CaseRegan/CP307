@@ -1,5 +1,6 @@
 import numpy as np;
 import time;
+import matplotlib.pyplot as plt;
 from LinkedList import *;
 
 #Load the problem file and save all the questions into a list
@@ -34,6 +35,13 @@ def loaddataset(filename):
     dataset.close();
     return Backpack_contents;
 
+#This function is the starting point of my thinking process
+#It recursively approaches different probilities of including
+#or not including the next element
+#Returns the largest profit
+#problem_content: a list of the items with value and weight in the problem
+#currentindex: current position in the problem_content list
+#capacity: the largest weight that the backpack in the question is allowed to hold
 def Recursive(problem_content, currentindex, capacity):
     if capacity<= 0 or currentindex >= len(problem_content):
         return 0;
@@ -49,6 +57,7 @@ def Recursive(problem_content, currentindex, capacity):
     return max(profit1, profit2);
 
 #Create a dynamic matrix which holds the best profits when adding each item at capacity c (0 <= c< = capacity)
+#Return the dynamic matrix
 #capacity: the largest weight that the backpack in the question is allowed to hold
 #problem_content: a list of the items with value and weight in the problem
 def CreateDynamicMatrix(capacity, problem_content):
@@ -71,6 +80,7 @@ def CreateDynamicMatrix(capacity, problem_content):
     return matrix;
 
 #Get the selected items from the dynamic matrix
+#Return the legal set of items which have the largest sum of profit
 #capacity: the largest weight that the backpack in the question is allowed to hold
 #problem_content: a list of the items with value and weight in the problem
 #matrix: the dynamic matrix created by the function CreateDynamicMatrix
@@ -87,8 +97,9 @@ def GetSet(capacity, problem_content, matrix):
     return resultset;
 
 #Solve each question in a list of questions
+#Return a list that holds the answer set for each of the problems in the problem list
 #problem_list: the list of all the questions in the file which contains backpack problems
-def Solve(problem_list):
+def solve(problem_list):
     answerset = []
     for i in range(problem_list.get_size()):
         matrix = CreateDynamicMatrix(problem_list.get(i)[1], problem_list.get(i)[2]);
@@ -97,10 +108,22 @@ def Solve(problem_list):
         answerset.append(resultset);
     return answerset;
 
+def solveKnapsackFile(filename):
+    Backpack_contents = loaddataset(filename);
+    result = solve(Backpack_contents);
+    return result;
+
 def main():
-    start_time = time.perf_counter();
-    #Backpack_contents = loaddataset("problems_size1000.txt");
-    Backpack_contents = loaddataset("Toy Problem.txt");
-    print(Solve(Backpack_contents));
-    end_time = time.perf_counter();
-    print(end_time - start_time);
+    timing_test = [10,15,20,30,40,50,75,100,200,300,400,500,1000];
+    result = []
+    for timing in timing_test:
+        t = str(timing);
+        start_time = time.perf_counter();
+        Backpack_contents = loaddataset("problems_size"+t+".txt");
+        Solve(Backpack_contents);
+        end_time = time.perf_counter();
+        result.append(end_time - start_time);
+    plt.xlabel("Input size");
+    plt.ylabel("Running time");
+    plt.plot(timing_test, result, 'r');
+    plt.show();
