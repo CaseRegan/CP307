@@ -120,7 +120,7 @@ def main():
         t = str(timing);
         start_time = time.perf_counter();
         Backpack_contents = loaddataset("problems_size"+t+".txt");
-        Solve(Backpack_contents);
+        solve(Backpack_contents);
         end_time = time.perf_counter();
         result.append(end_time - start_time);
     plt.xlabel("Input size");
