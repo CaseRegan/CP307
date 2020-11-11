@@ -3,7 +3,8 @@
 #include <string.h>
 #include <time.h>
 
-#define BAG_SIZE 100
+#define SMALL_BAG 125
+#define LARGE_BAG 200
 
 /* An item to be considered in a knapsack problem,
    represented in a problem file by a line of text
@@ -17,8 +18,14 @@ typedef struct {
 typedef struct
 {
 	int size;
-	Item items[BAG_SIZE];
+	Item items[SMALL_BAG];
 } Bag;
+
+typedef struct
+{
+	int size;
+	Item items[LARGE_BAG];
+} BigBag;
 
 /* A knapsack problem with a title, maximum capacity, 
    and a list of items to be arranged in potential bags */
@@ -200,10 +207,11 @@ Bag bruteforce_solve(int capacity, Bag bag)
 	}
 }
 
-Bag dynamic_solve(int capacity, Bag bag)
+Bag dynamic_solve(int capacity, Bag bag, Bag **table)
 {
-	// What a gorgeous block of memory
-	Bag (*T)[capacity+1] = malloc(sizeof(Bag[bag.size+1][capacity+1]));
+	/*Bag (**T) = (Bag**) malloc((bag.size+1)*sizeof(Bag*));
+	for (int i = 0; i < bag.size+1; i++)
+		T[i] = (Bag*) malloc((capacity+1)*sizeof(Bag));*/
 	int i, w;
 
 	for (i = 0; i <= bag.size; i++)
@@ -214,26 +222,24 @@ Bag dynamic_solve(int capacity, Bag bag)
 			{
 				Bag tmp;
 				tmp.size = 0;
-				T[i][w] = tmp;
+				table[i][w] = tmp;
 			}
 			else if (bag.items[i-1].weight <= w)
 			{
-				Bag b1 = T[i-1][(w-bag.items[i-1].weight)];
+				Bag b1 = table[i-1][(w-bag.items[i-1].weight)];
 				put_bag(&b1, bag.items[i-1]);
 
-				if (score_bag(b1) > score_bag(T[i-1][w]))
-					T[i][w] = b1;
+				if (score_bag(b1) > score_bag(table[i-1][w]))
+					table[i][w] = b1;
 				else
-					T[i][w] = T[i-1][w];
+					table[i][w] = table[i-1][w];
 			}
 			else
-				T[i][w] = T[i-1][w];
+				table[i][w] = table[i-1][w];
 		}
 	}
 
-	Bag solution = T[bag.size][capacity];
-	free(T);
-	return solution;
+	return table[bag.size][capacity];
 }
 
 int main(int argc, char *argv[]) 
@@ -252,6 +258,10 @@ int main(int argc, char *argv[])
 	n = read_num_problems(fname);
 	p = (Problem*) malloc(n*sizeof(Problem));
 
+	Bag (**table) = (Bag**) malloc((LARGE_BAG)*sizeof(Bag*));
+	for (int i = 0; i < LARGE_BAG; i++)
+		table[i] = (Bag*) malloc((10000)*sizeof(Bag));
+
 	read_problems_file(fname, p);
 
 	double total_time = 0;
@@ -263,7 +273,7 @@ int main(int argc, char *argv[])
 
 		// Use comments to decide which function you want to run
 		//b = bruteforce_solve(p[i].capacity, p[i].bag);
-		b = dynamic_solve(p[i].capacity, p[i].bag);
+		b = dynamic_solve(p[i].capacity, p[i].bag, table);
 
 		t = clock() - t;
 		double func_time = ((double)t)/CLOCKS_PER_SEC;
@@ -279,6 +289,7 @@ int main(int argc, char *argv[])
 	}
 
 	printf("\nCompleted %d problems in %fs\n", n, total_time);
+	free(p);
 
 	return 0;
 }
